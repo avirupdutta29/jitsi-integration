@@ -45,7 +45,7 @@ export class JitsiComponent  {
 
     
 
-    domain: string="jitsi.exzatech.com:8443";
+    domain: string="jitsi.exzaconcert.com";
     room: any;
     user: any;
     api: any;
@@ -140,8 +140,7 @@ export class JitsiComponent  {
                 DEFAULT_REMOTE_DISPLAY_NAME: 'New User',
                 TOOLBAR_BUTTONS: [
                     'microphone', 'fullscreen', 'camera',
-                    'hangup', 'profile', '', 'chat', 'recording',
-                    'livestreaming', 'sharedvideo','raisehand',
+                    'hangup', 'profile', '', 'chat', 'invite',
                     'tileview', 'videobackgroundblur',
                     'e2ee'
                   ],
