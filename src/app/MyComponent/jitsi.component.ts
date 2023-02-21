@@ -1,5 +1,5 @@
 import { DialogComponent } from './../shared/components/dialog/dialog.component';
-import { Component, Input, NgModule, EventEmitter, Output} from '@angular/core';
+import { Component, Input, NgModule, EventEmitter, Output, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import * as $ from "jquery";
 import { faMicrophoneSlash, faPhoneSlash, faMicrophone, faVideoSlash, faVideo, faFilm, faTableCellsLarge, faLock, faCircleXmark, faExpand, faMessage, faHand, faRecordVinyl, faUserGroup } from '@fortawesome/free-solid-svg-icons';
@@ -25,7 +25,7 @@ library.add(fas);
 
 
 
-export class JitsiComponent  {
+export class JitsiComponent implements OnInit, OnDestroy {
     [x: string]: any;
 
     faPhoneSlash=faPhoneSlash;
@@ -83,6 +83,9 @@ export class JitsiComponent  {
         public generalComponent: DialogComponent
         
     ){}
+    ngOnDestroy(): void {
+        throw new Error('Method not implemented.');
+    }
 
 
    
@@ -98,8 +101,10 @@ export class JitsiComponent  {
             }); 
     }
      
-    StartMeeting() {
+    StartMeeting() { 
         
+    //     var ifr = document.getElementsByName('Right')[0];
+    // ifr.src = ifr.src;
        
         var meetingId = $('#txtMeetingId').val();
         var dispNme = $('#txtDispNme').val();
@@ -162,12 +167,24 @@ export class JitsiComponent  {
             
          };
 
-         
+         alert("You have entered the start meeting function");
         console.log(this.options.roomName);
         this.api= new JitsiMeetExternalAPI(this.domain, this.options); 
+
+        this.api.on('readyToClose', () => {
+            this.router.navigate(['']);
+            return;
+        });
+
+        //Set Room Password
         
         var data=$('#txtPassword').val();
 
+            this.api.on('readyToClose', () => {
+                console.log('call hung up fron add Event Listener Event');
+                alert('call hung up fron add Event Listener Event');
+            });
+            
         this.api.addEventListener('participantRoleChanged', (event: { role: string; }) => {
 
             console.log("The role for the first time is : ", event);
@@ -271,6 +288,9 @@ enableCamera(){
     
         if(command =='hangup'){
             this.api.executeCommand('hangup');
+            alert("You have ended the call");
+            this.router.navigate(['']);
+            return;
             //this.router.navigate(['/thank-you']);
             
         }

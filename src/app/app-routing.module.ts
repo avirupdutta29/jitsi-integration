@@ -11,6 +11,10 @@ const routes: Routes = [
     {
         path: 'thank-you',
         component: ThankYouComponent
+    },
+    {
+        path: 'jitsi-component',
+        component: JitsiComponent
     }
 ];
 
